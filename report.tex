@@ -58,9 +58,6 @@ We consider the two-dimensional Stokes equations
 \section{Numerical Method}
 % --------------------------------------------------
 
-% Describe the MAC grid, finite difference
-% discretization, boundary conditions, and
-% resulting saddle-point linear system.
 We use the method of manufactured solutions to solve the problem. We are given:
 \begin{align*}
   U_{an}(x,y) &= \sin (2\pi y)\sin (2\pi x),\\
@@ -87,9 +84,6 @@ in matlab, with prescribed velocity values moved to the right hand side of the s
 % --------------------------------------------------
 \section{Results and Error Analysis}
 % --------------------------------------------------
-
-% Discuss manufactured solutions, numerical
-% results, and convergence behavior.
 
 The following graph is the solution plot of the magnitude of $\uvec$ attained from solving the system in Matlab using backslash:
   \begin{figure}[H]
@@ -122,14 +116,10 @@ Figure 2 graphs the $L^2$ errors for $U,V$, and $P$ as the $N$ grows. All errors
 \section{Additional Experiment}
 % --------------------------------------------------
 
-% Describe your implementation of Charlie's Rule
-% and any additional numerical experiments.
 
 % --------------------------------------------------
 \section{Conclusion}
 % --------------------------------------------------
 
-% Summarize numerical accuracy, convergence,
-% and observations.
 
 \end{document}
