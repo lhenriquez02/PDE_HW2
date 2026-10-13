@@ -116,10 +116,42 @@ Figure 2 graphs the $L^2$ errors for $U,V$, and $P$ as the $N$ grows. All errors
 \section{Additional Experiment}
 % --------------------------------------------------
 
+We now wish to model flow through some idealized 2d porous microstructure such as circular obstacles. However, using a MAC grid with obstacle masks for instance gives rise to complicated obstacle boundaries. We choose to instead approximate solid boundaries using a method known as Brinkman Penalization to preserve the structure of the existing code, while still simulating flow in porous microstructure. Instead of the original system, we solve:
+\begin{align*}
+  -\mu \Delta \uvec + \grad p + \alpha (x)\uvec = f\\
+  \grad \cdot \uvec = 0
+\end{align*}
+
+where
+\begin{align*}
+  \alpha (x) =
+  \begin{cases}
+    0 & x\in \Omega _{f}, \\
+    \alpha _{s} & x\in \Omega _{s}
+  \end{cases}
+\end{align*}
+where $\alpha _{s}$ is large, $\Omega $ is $[0,1]\times [0,1]$, $\Omega _{f} $ is the region without the obstacle, and $\Omega_{s} $ is the union of regions inside a solid obstacle. This $\alpha $ term suppresses velocity inside solid regions, and so approximates flow in a porous microstructure. Instead of the boundary condition $V=-3.5$, it's better to use a constant vertical body force and periodic boundary conditions in both directions. We thus solve
+\begin{align*}
+  \mu \Delta \uvec - \grad p - \alpha (x,y) \uvec = -F\\
+  \grad \cdot \uvec = 0
+\end{align*}
+
+with $\mu  =1$, $ F=(0,-1)$, and $\alpha _{s} =10^5$
+
+Adapting the solution above to the new problem, we get:
+
+  \begin{figure}[H]
+     \centering
+     \includegraphics[width=0.6\linewidth]{porous_velocity.pdf}
+     \caption{Solution plot of magnitude of $\uvec$ for the porous medium experiment}
+     \label{fig:porous_velocity}
+   \end{figure}
+
+   Figure 3 showcases the simulation of incompressible fluid flow through a porous microstructure. The contours demonstrate that fluid is redirected around the circular obstacles, with the flow between obstacles having a higher velocity magnitude (due to incompressibility constraint). The velocities are effectively 0 within the obstacles, and is reduced near the obstacles due to the penalization.
 
 % --------------------------------------------------
-\section{Conclusion}
+\section{AI Use Disclosure}
 % --------------------------------------------------
-
+AI was used to learn about MAC discretization, as well as to plot all the graphs in the conventions required by the class. In particular, ChatGPT wrote all the matlab code to generate figures 1,2 and 3. ChatGPT was also used to learn about the Brinkman Equations as a good way of approximating flow through a porous microstructure. GLM 5.3 Flash with Opencode harness was used for debugging solver code, directly repairing broken code sections, as well as adding comments and structuring the Matlab code into sections. GLM 5.3 Flash also read the project directory and generated the README.md.
 
 \end{document}
